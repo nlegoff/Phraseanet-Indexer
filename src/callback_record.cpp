@@ -263,6 +263,7 @@ void evt_end(CDOMDocument *xmlparser)
 			prop->type = currentField->type;
 			prop->record_id = indexer->current_rid;
 			prop->pxpath = indexer->current_xpath;
+			prop->business = currentField->business;
 			prop->next = indexer->firstProp;
 			indexer->firstProp = prop;
 		}
@@ -326,6 +327,8 @@ void evt_end(CDOMDocument *xmlparser)
 
 						thit->hitstart = currentNode->index_start;
 						thit->hitlen   = currentNode->index_end - currentNode->index_start + 1;
+						
+						thit->business = currentField->business;
 
 //zSyslog._log(CSyslog::LOGL_PARSE, CSyslog::LOGC_THESAURUS,
 //						snprintf(strbuff, 1000, "start=%d, end=%d (len=%d) \n", currentNode->index_start, currentNode->index_end, thit->hitlen);
@@ -367,6 +370,8 @@ void evt_end(CDOMDocument *xmlparser)
 
 						thit->hitstart = currentNode->index_start;
 						thit->hitlen   = currentNode->index_end - currentNode->index_start + 1;
+
+						thit->business = currentField->business;
 					}
 				}
 				nfound += tids.idNr;
@@ -399,6 +404,8 @@ void evt_end(CDOMDocument *xmlparser)
 
 						thit->hitstart = currentNode->index_start;
 						thit->hitlen   = currentNode->index_end - currentNode->index_start + 1;
+
+						thit->business = currentField->business;
 					}
 				}
 				nfound += tids.idNr;
@@ -484,6 +491,8 @@ void evt_end(CDOMDocument *xmlparser)
 
 									thit->hitstart = currentNode->index_start;
 									thit->hitlen   = currentNode->index_end - currentNode->index_start + 1;
+
+									thit->business = currentField->business;
 								}
 
 								// prop 'lng' of the new 'sy'
@@ -594,7 +603,7 @@ void evt_keyword(CDOMDocument *xmlparser, const char *lowKeyword, unsigned int l
 	if(k)
 	{
 		CHit *h;
-		if( (h = new CHit(record_id, pos, len, index)) != NULL)
+		if( (h = new CHit(record_id, pos, len, index, currentField->business)) != NULL)
 		{
 			h->pxpath = indexer->current_xpath;
 			h->next = k->firsthit;

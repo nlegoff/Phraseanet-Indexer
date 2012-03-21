@@ -1,3 +1,8 @@
+3.9.0.0
+"business fields"
+keep 'business' boolean attribute from structure into indexes (hit & thit & prop)
+
+
 3.8.2.1
 fix for phraseanet 3.5 : in structure, allow empty attributes (ex. tbranch=""). (= fix pb creating a candidate-branch for every field).
 fix bug : sometimes xpath_id was not set (= operator "IN" returns 0 answers)

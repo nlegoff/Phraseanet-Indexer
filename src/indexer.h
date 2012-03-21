@@ -135,6 +135,7 @@ class CStructField
 		enum { TYPE_NONE=0, TYPE_TEXT, TYPE_INT, TYPE_FLOAT, TYPE_DATE };
 		int type;					// type of the field as enum inside known types 'text', 'number', 'date'
 		bool index;
+		bool business;				// it's a business field
 		char *tbranch;				// attribut as /thesaurus/te[@id='T4'] | /thesaurus/te[@id='T6'] ; NULL if not set
 		char *cbranch;				// attribut as /cterms/te[@field='MotsCles'] ; NULL if not set
 
@@ -161,6 +162,7 @@ class CStructField
 			this->cbranch = NULL;
 			this->type = CStructField::TYPE_NONE;
 			this->index = true;
+			this->business = true;	// by default !
 
 			this->tXPathCtxThesaurus = NULL;
 			this->nXPathCtxThesaurus = 0;
@@ -280,6 +282,7 @@ class CTHit
 		char *value;				// value du genre T2d56d7d1d
 		unsigned int hitstart;				// hitstart
 		unsigned int hitlen;				// hitlen
+		bool business;
 		// ----------------------------
 
 		CXPath *pxpath;				// ptr vers un cxpath : donne le xpath_id et le name par indirection cxpath->field
@@ -322,12 +325,13 @@ class CHit
 		unsigned int index;			// iw (index of the kword in xml)
 		unsigned int pos;			// hitstart
 		unsigned int len;			// hitlen
+		bool business;
 		// ----------------------------
 
 		CXPath *pxpath;		// ptr to the xpath, allow to get the xpath_id
 
 		CHit *next;
-		CHit(unsigned int record_id, unsigned int pos, unsigned int len, unsigned int index)
+		CHit(unsigned int record_id, unsigned int pos, unsigned int len, unsigned int index, bool business)
 		{
 			this->record_id = record_id;
 			this->pos       = pos;
@@ -335,6 +339,7 @@ class CHit
 			this->index     = index;
 			this->next      = NULL;
 			this->pxpath    = NULL;
+			this->business  = business;
 		};
 };
 
@@ -410,6 +415,7 @@ class CProp
 		unsigned int record_id;		// record_id
 		int type;
 		char *value;	// value
+		bool business;
 		// -----------------------------
 
 		CXPath *pxpath;				// ptr to a cxpath : give the xpath_id and the name by indirection cxpath->field
@@ -423,6 +429,7 @@ class CProp
 				memcpy(this->value, v, l);
 			this->pxpath = NULL;
 			this->next = NULL;
+			this->business = TRUE;
 		}
 
 		~CProp()
